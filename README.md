@@ -86,8 +86,6 @@ Upon running the application, it will automatically access the default webcam, o
 - Check your webcam permissions if the application fails to access the video feed.
 - For issues related to the overlay not appearing correctly, verify the paths and formats of the input files.
 
-## Contributors
-[Hannah Hachemer, Mario Hachemer]
 
 ## License
 [MIT License.]
