@@ -102,7 +102,7 @@ def overlay_lungs(frame_webcam, landmarks, frame_video):
 
 
     if landmarks:
-        # Extract the relevant landmarks
+        # Extract  relevant landmarks
         shoulder_left = landmarks[mp.solutions.pose.PoseLandmark.LEFT_SHOULDER.value]
         shoulder_right = landmarks[mp.solutions.pose.PoseLandmark.RIGHT_SHOULDER.value]
         hip_left = landmarks[mp.solutions.pose.PoseLandmark.LEFT_HIP.value]
@@ -110,7 +110,7 @@ def overlay_lungs(frame_webcam, landmarks, frame_video):
         face_top = landmarks[mp.solutions.pose.PoseLandmark.NOSE.value]
  
         face_top_y = int(face_top.y * frame_webcam.shape[0]) 
-        # Bestimmen Sie den unteren Punkt der Schultern
+        #bottom shoulder point
         shoulder_bottom_y = max(shoulder_left.y, shoulder_right.y) * frame_webcam.shape[0]
 
         top_center_x = int(frame_webcam.shape[1] * (shoulder_left.x + shoulder_right.x) / 2)
@@ -118,17 +118,15 @@ def overlay_lungs(frame_webcam, landmarks, frame_video):
 
         hip_center_x = int(frame_webcam.shape[1] * (hip_left.x + hip_right.x) / 2)
         hip_center_y = int(frame_webcam.shape[0] * (hip_left.y + hip_right.y) / 2)
-        # Verwenden der Distanz zwischen Schultern und Hüften, um die Overlay-Größe zu bestimmen
+        # use shoulder distance to calculate overlay
         overlay_height = abs(shoulder_left.y - hip_left.y) * frame_height
         overlay_width = abs(shoulder_left.x - shoulder_right.x) * frame_width
-        # Berechnen Sie einen Skalierungsfaktor basierend auf der Neigung des Körpers
-        # Beispiel: Verwenden Sie den Winkel zwischen den Schultern und den Hüften
+        # calculate scaling factor based on body pose 
+       
         
         body_tilt_factor = (hip_center_y - shoulder_bottom_y) / frame_webcam.shape[0]
 
-        # Berechnen der Mitte zwischen den Schultern für die Overlay-Position
-   
-        
+        #  Overlay-Position, shoulder distance        
         dx = shoulder_right.x - shoulder_left.x
         dy = shoulder_right.y - shoulder_left.y
         angle = np.arctan2(dy, dx)
@@ -190,7 +188,7 @@ def overlay_lungs(frame_webcam, landmarks, frame_video):
 
        
     
-        # Adjust the overlay size if necessary
+        # Adjust the overlay size (if necessary)
         overlay_width = end_x - overlay_x
         overlay_height = end_y - overlay_y
 
@@ -236,7 +234,7 @@ def process_video(webcam_index, video_path):
             print("Ignoring empty camera frame.")
             continue
 
-        # If the video has ended, you might loop it or handle it as needed
+        
         if not success_video:
             cap_video.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Loop the video
             success_video, frame_video = cap_video.read()
@@ -268,11 +266,11 @@ def process_video(webcam_index, video_path):
             
        
 
-        # Display the frame
+        # Display  frame
         cv2.imshow('Lungs Overlay', frame_webcam)
 
                 
-        # Break the loop if 'q' is pressed
+        # Break  loop if 'q' is pressed
         if cv2.waitKey(5) & 0xFF == ord('q'):
            break
   
@@ -282,11 +280,6 @@ def process_video(webcam_index, video_path):
     cap_video.release()
     cv2.destroyAllWindows()
 
-
-
-
-# Note: Uncomment the call to process_video with the path to your lungs image to run the code.
-# process_video("path/to/your/lungs_image.png")
 
 def overlay_image(background, overlay, x, y):
 
