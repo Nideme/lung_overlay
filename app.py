@@ -10,7 +10,6 @@ mp_drawing = mp.solutions.drawing_utils
 
 
 
-# Here, right after your imports
 def adjust_landmarks_for_rotation(landmarks, frame_width, frame_height):
     adjusted_landmarks = []
     for landmark in landmarks.landmark:
@@ -19,7 +18,7 @@ def adjust_landmarks_for_rotation(landmarks, frame_width, frame_height):
         adjusted_landmarks.append(landmark)  
     return adjusted_landmarks
 
-#rotate video for vertical 16k display
+#rotate video for vertical display
 def rotate_frame(frame, rotation=cv2.ROTATE_90_CLOCKWISE):
     return cv2.rotate(frame, rotation)
 
